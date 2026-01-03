@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const { scrapeReport } = require('./scraper');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -23,6 +23,10 @@ app.post('/scrape', async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Failed to scrape the URL', details: error.message });
     }
+});
+
+app.get('/awake', (req, res) => {
+    res.json({ message: 'Server is awake' });
 });
 
 app.listen(PORT, () => {
